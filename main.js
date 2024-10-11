@@ -73,8 +73,18 @@ function initApp() {
         in vec4 pos;
         out vec4 fragColor;
         void main() {
-          fragColor = vec4((pos.y+1.0)/2.0, .0, .0, 1.0);
+        float x = 1.0;
+        x = (sin(u_time)+1.0)/2.0;
+        if(sqrt(pos.y*pos.y+pos.x*pos.x) > (x-0.002) && sqrt(pos.y*pos.y+pos.x*pos.x) < x){
+            fragColor = vec4(1, .0, .0, 1.0);
+          }else{
+            fragColor = vec4(x-sin(u_time)*sqrt(pos.y*pos.y+pos.x*pos.x), .0, .0, 1.0);
+          }
+          if(sqrt(pos.y*pos.y+pos.x*pos.x) > x){
+          fragColor = vec4(.0, .0, .0, 1.0);
+          }
         }
+
       `;
 
       const vertexShader = this.createShader(this.gl.VERTEX_SHADER, vertexShaderSource);
